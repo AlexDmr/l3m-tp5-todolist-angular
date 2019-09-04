@@ -32,4 +32,14 @@ export class AppComponent {
     this.tds.updateIsDone(item, isDone);
   }
 
+  undo() {
+    this.tds.undo();
+  }
+
+  redo() {
+    this.tds.redo();
+  }
+
+  get previous() {return this.tds.previous}
+  get futures() {return this.tds.futures}
 }

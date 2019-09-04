@@ -4,7 +4,8 @@
 <form (ngSubmit)="append(lab.value); lab.value=''">
   <input #lab />
 </form>
-
+<button (click)="undo()">UNDO</button>
+<button (click)="redo()">REDO</button>
 <section *ngIf="todoListObs | async as todoList">
   <ul>
   <li *ngFor="let item of todoList.items">
@@ -16,6 +17,11 @@
   </li>
   </ul>
 
+  <hr/>
+  Previous:
+  <ul><li *ngFor="let v of previous">{{v | json}}</li></ul>
+  Futures:
+  <ul><li *ngFor="let v of futures">{{v | json}}</li></ul>
   <hr/>
   {{todoList | json}}
 </section>

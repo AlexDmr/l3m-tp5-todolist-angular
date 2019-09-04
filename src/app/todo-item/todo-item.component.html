@@ -2,12 +2,17 @@
   <input 	class			= "toggle"
           type			= "checkbox"
           name			= "done"
+          [ngModel] = "item.isDone"
   />
-  <label 	class="texte"></label>
-  <button class="destroy"></button>
+  <label 	class="texte" (dblclick)="isEditing = true">
+    {{item.label}} : {{item.isDone}}
+  </label>
+  <button class="destroy" (click)="remove()"></button>
 </div>
 <form>
   <input  #newTextInput
           name    = "newTextInput"
-          class   = "edit"/>
+          class   = "edit"
+          [ngModel] = "item.label"
+  />
 </form>

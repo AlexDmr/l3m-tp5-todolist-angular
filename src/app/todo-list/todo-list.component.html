@@ -1,19 +1,25 @@
-<section class="todoapp">
+<section class="todoapp" *ngIf="todolistObs | async as todolist">
   <header class="header">
-    <h1></h1>
-    <form>
+    <h1>{{todolist.label}}</h1>
+    <form (ngSubmit)="append(lab.value); lab.value = ''">
       <input  name        = "newTodoInput"
               class       = "new-todo"
               placeholder = "Que faire?"
-              autofocus />
+              autofocus #lab/>
     </form>
   </header>
   <section class="main">
-    <input  class="toggle-all"
+    <input  class="toggle-all toto titi"
             type="checkbox"
             name="toggleAll"
     />
     <ul class="todo-list">
+      <li *ngFor="let item of todolist.items"
+          [class.completed] = "item.isDone"
+          [class.editing]   = "compoItem.isEditing"
+      >
+        <app-todo-item [item]="item" #compoItem></app-todo-item>
+      </li>
     </ul>
   </section>
   <footer class="footer">
