@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {TodoService} from './todo.service';
+import {TodoItem, TodoList} from './definitions';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,27 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'l3m-tp5-todolist';
+  constructor(private tds: TodoService) {
+  }
+
+  get todoListObs(): Observable<TodoList> {
+    return this.tds.observable;
+  }
+
+  append(label: string) {
+    this.tds.append(label);
+  }
+
+  remove(item: TodoItem) {
+    this.tds.remove(item);
+  }
+
+  updateLabel(item: TodoItem, label: string) {
+    this.tds.updateLabel(item, label);
+  }
+
+  updateIsDone(item: TodoItem, isDone: boolean) {
+    this.tds.updateIsDone(item, isDone);
+  }
+
 }
