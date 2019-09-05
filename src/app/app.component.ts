@@ -25,11 +25,11 @@ export class AppComponent {
   }
 
   updateLabel(item: TodoItem, label: string) {
-    this.tds.updateLabel(item, label);
+    this.tds.updateLabel(label, item);
   }
 
   updateIsDone(item: TodoItem, isDone: boolean) {
-    this.tds.updateIsDone(item, isDone);
+    this.tds.updateIsDone(isDone, item);
   }
 
   undo() {
@@ -40,6 +40,6 @@ export class AppComponent {
     this.tds.redo();
   }
 
-  get previous() {return this.tds.previous}
-  get futures() {return this.tds.futures}
+//  get previous() {return this.tds.previous}
+//  get futures() {return this.tds.futures}
 }

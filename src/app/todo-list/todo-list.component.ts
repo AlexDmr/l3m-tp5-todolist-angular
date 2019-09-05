@@ -23,4 +23,12 @@ export class TodoListComponent implements OnInit {
     return this.tds.observable;
   }
 
+  get allIsChecked(): boolean {
+    return this.tds.allIsChecked();
+  }
+
+  checkAllWith(b: boolean) {
+
+  }
+
 }

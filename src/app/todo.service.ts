@@ -10,40 +10,44 @@ export class TodoService {
   private current: TodoList = {label: 'MIAG', items: List([]) };
   private subj = new BehaviorSubject<TodoList>(this.current);
   readonly observable = this.subj.asObservable();
-  previous: TodoList[] = [];
-  futures: TodoList[] = [];
+  private previous: TodoList[] = [];
+  private futures: TodoList[] = [];
 
   constructor() {
     this.managePersistency();
     this.manageUndoRedo();
   }
 
-  append(label: string) {
+  allIsChecked(): boolean {
+    const tdl = this.subj.getValue();
+    return tdl.items.find( item => !item.isDone ) === undefined;
+  }
+
+  append(...labels: string[]) {
     const L: TodoList = this.subj.getValue();
-    this.subj.next( {...L, items: L.items.push( {label, isDone: false} ) } );
+    this.subj.next( {...L, items: L.items.push( ...labels.map( label => ({label, isDone: false}) ) ) } );
   }
 
-  remove(item: TodoItem) {
+  remove(...items: TodoItem[]) {
     const L = this.subj.getValue();
-    this.subj.next( {...L, items: L.items.remove( L.items.indexOf(item) ) } );
+    const NL = {...L, items: L.items.filter(item => items.indexOf(item) === -1 ) };
+    this.subj.next( NL );
   }
 
-  updateLabel(item: TodoItem, label: string) {
+  updateLabel(label: string, ...items: TodoItem[] ) {
     if (label !== '') {
-      this.updateItem(item, {...item, label} );
+      const L = this.subj.getValue();
+      const NL = {...L, items: L.items.map(item => items.indexOf(item) >= 0 ? {...item, label} : item ) };
+      this.subj.next( NL );
     } else {
-      this.remove(item);
+      this.remove(...items);
     }
   }
 
-  updateIsDone(item: TodoItem, isDone: boolean) {
-    this.updateItem(item, {...item, isDone} );
-  }
-
-  updateItem(item: TodoItem, newItem: TodoItem) {
+  updateIsDone(isDone: boolean, ...items: TodoItem[]) {
     const L = this.subj.getValue();
-    const i = L.items.indexOf(item);
-    this.subj.next( {...L, items: L.items.splice(i, 1, newItem ) } );
+    const NL = {...L, items: L.items.map(item => items.indexOf(item) >= 0 ? {...item, isDone} : item ) };
+    this.subj.next( NL );
   }
 
   undo() {
