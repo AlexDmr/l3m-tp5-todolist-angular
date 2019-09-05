@@ -14,10 +14,11 @@
             name="toggleAll"
             id  ="toggleAll"
             [ngModel] = "allIsChecked"
+            (ngModelChange) = "toggleAllItems()"
     />
     <label for="toggleAll">Mark all as complete</label>
     <ul class="todo-list">
-      <li *ngFor="let item of todolist.items"
+      <li *ngFor="let item of items"
           [class.completed] = "item.isDone"
           [class.editing]   = "compoItem.isEditing"
       >
@@ -29,13 +30,13 @@
     <span class="todo-count"><strong></strong> restantes</span>
     <ul class="filters">
       <li>
-        <a class="filterAll">Tous</a>
+        <a class="filterAll" [class.selected]="isFilterAll" (click)="filterAll()">Tous</a>
       </li>
       <li>
-        <a class="filterActives">Actifs</a>
+        <a class="filterActives" [class.selected]="isFilterUndone" (click)="filterUndone()">Actifs</a>
       </li>
       <li>
-        <a class="filterCompleted">Complétés</a>
+        <a class="filterCompleted" [class.selected]="isFilterDone" (click)="filterDone()">Complétés</a>
       </li>
     </ul>
     <button class="clear-completed">Supprimer cochées</button>

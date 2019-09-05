@@ -1,11 +1,12 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {TodoItem} from '../definitions';
 import {TodoService} from '../todo.service';
 
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
-  styleUrls: ['./todo-item.component.scss']
+  styleUrls: ['./todo-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoItemComponent implements OnInit {
   @Input() item: TodoItem;

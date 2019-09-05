@@ -18,6 +18,10 @@ export class TodoService {
     this.manageUndoRedo();
   }
 
+  getCurrentTodoList(): TodoList {
+    return this.subj.getValue();
+  }
+
   allIsChecked(): boolean {
     const tdl = this.subj.getValue();
     return tdl.items.find( item => !item.isDone ) === undefined;
