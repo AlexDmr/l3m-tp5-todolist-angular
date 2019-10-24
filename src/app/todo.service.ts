@@ -22,11 +22,6 @@ export class TodoService {
     return this.subj.getValue();
   }
 
-  allIsChecked(): boolean {
-    const tdl = this.subj.getValue();
-    return tdl.items.find( item => !item.isDone ) === undefined;
-  }
-
   append(...labels: string[]) {
     const L: TodoList = this.subj.getValue();
     this.subj.next( {...L, items: L.items.push( ...labels.map( label => ({label, isDone: false}) ) ) } );
