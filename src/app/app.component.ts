@@ -16,30 +16,4 @@ export class AppComponent {
     return this.tds.observable;
   }
 
-  append(label: string) {
-    this.tds.append(label);
-  }
-
-  remove(item: TodoItem) {
-    this.tds.remove(item);
-  }
-
-  updateLabel(item: TodoItem, label: string) {
-    this.tds.updateLabel(label, item);
-  }
-
-  updateIsDone(item: TodoItem, isDone: boolean) {
-    this.tds.updateIsDone(isDone, item);
-  }
-
-  undo() {
-    this.tds.undo();
-  }
-
-  redo() {
-    this.tds.redo();
-  }
-
-//  get previous() {return this.tds.previous}
-//  get futures() {return this.tds.futures}
 }
