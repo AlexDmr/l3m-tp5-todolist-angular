@@ -1,7 +1,7 @@
-<section class="todoapp">
+<section class="todoapp" *ngIf="todoListObs | async as tdl">
   <header class="header">
     <h1></h1>
-    <form>
+    <form (ngSubmit)="append(lab.value); lab.value = ''">
       <input  name        = "newTodoInput"
               class       = "new-todo"
               placeholder = "Que faire?"
@@ -12,25 +12,47 @@
     <input  class="toggle-all"
             type="checkbox"
             name="toggleAll"
+            [ngModel]="isAllDone(tdl.items)"
     />
-    <label for="toggleAll">Mark all as complete</label>
-    <ul class="todo-list">
+    <label for="toggleAll"
+           (click)="setAllDone(!isAllDone(tdl.items), tdl.items)"
+           *ngIf="tdl.items.size > 0"
+    >Mark all as complete</label>
+    <ul class="todo-list" >
+      <li *ngFor="let item of getFilteredItems(tdl.items)"
+          [class.completed] = "item.isDone"
+          [class.editing]   = "compoItem.isEditing"
+      >
+        <app-todo-item [item]="item" #compoItem></app-todo-item>
+      </li>
     </ul>
   </section>
   <footer class="footer">
-    <span class="todo-count"><strong></strong> restantes</span>
+    <span class="todo-count"><strong>{{getNbItemsLeft(tdl.items)}}</strong> restantes</span>
     <ul class="filters">
       <li>
-        <a class="filterAll">Tous</a>
+        <a class="filterAll"
+           (click) = "currentFilter = filterAll"
+           [class.selected]="currentFilter === filterAll"
+        >Tous</a>
       </li>
       <li>
-        <a class="filterActives">Actifs</a>
+        <a class="filterActives"
+           (click) = "currentFilter = filterUndone"
+           [class.selected]="currentFilter === filterUndone"
+        >Actifs</a>
       </li>
       <li>
-        <a class="filterCompleted">Complétés</a>
+        <a class="filterCompleted"
+           (click) = "currentFilter = filterDone"
+           [class.selected]="currentFilter === filterDone"
+        >Complétés</a>
       </li>
     </ul>
-    <button class="clear-completed">Supprimer cochées</button>
+    <button class="clear-completed"
+            *ngIf="getNbItemsLeft(tdl.items) < tdl.items.size"
+            (click) = "clearCompleted(tdl.items)"
+    >Supprimer cochées</button>
   </footer>
 </section>
 
