@@ -1,3 +1,28 @@
 <app-todo-list></app-todo-list>
 
 <hr/>
+
+<section *ngIf="todoListObs | async as tdl">
+  <form (ngSubmit)="append(newItemText.value)">
+    <input type            = "checkbox"
+           name            = "allDone"
+           [ngModel]       = "isAllDone( tdl.items )"
+           (ngModelChange) = "setAllDone($event, tdl.items)"
+           />
+    <input name="newItemText" #newItemText />
+  </form>
+  <ol>
+    <li *ngFor="let item of tdl.items">
+      <input type            = "checkbox"
+             [ngModel]       = "item.isDone"
+             (ngModelChange) = "setDone(item, $event)"
+      />
+      {{item.label}}
+      <form (ngSubmit) = "setLabel(item, newLabel.value)">
+        <input name="newLabel" [ngModel] = "item.label" #newLabel />
+      </form>
+      <button (click)="delete(item)">DELETE</button>
+    </li>
+  </ol>
+  <pre>{{tdl | json}}</pre>
+</section>
