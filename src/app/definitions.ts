@@ -3,6 +3,7 @@ import {List} from 'immutable';
 export interface TodoItem {
   readonly label: string;
   readonly isDone: boolean;
+  readonly color: string;
 }
 
 export interface TodoList {

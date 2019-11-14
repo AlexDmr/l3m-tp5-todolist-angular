@@ -24,7 +24,11 @@ export class TodoService {
 
   append(...labels: string[]) {
     const L: TodoList = this.subj.getValue();
-    this.subj.next( {...L, items: L.items.push( ...labels.map( label => ({label, isDone: false}) ) ) } );
+    this.subj.next( {...L, items: L.items.push( ...labels.map( label => ({
+        label,
+        color: '#FFFF00',
+        isDone: false
+    }) ) ) } );
   }
 
   remove(...items: TodoItem[]) {
@@ -46,6 +50,12 @@ export class TodoService {
   updateIsDone(isDone: boolean, ...items: TodoItem[]) {
     const L = this.subj.getValue();
     const NL = {...L, items: L.items.map(item => items.indexOf(item) >= 0 ? {...item, isDone} : item ) };
+    this.subj.next( NL );
+  }
+
+  updateColor(color: string, ...items: TodoItem[]) {
+    const L = this.subj.getValue();
+    const NL = {...L, items: L.items.map(item => items.indexOf(item) >= 0 ? {...item, color} : item ) };
     this.subj.next( NL );
   }
 

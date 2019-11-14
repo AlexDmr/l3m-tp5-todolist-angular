@@ -1,7 +1,7 @@
 <section class="todoapp"
          *ngIf="todoListObs | async as tdl">
   <header class="header">
-    <h1>{{tdl.}}</h1>
+    <h1>{{tdl.label}}</h1>
     <form (ngSubmit) = "append(lab.value); lab.value = ''">
       <input  name        = "newTodoInput"
               class       = "new-todo"

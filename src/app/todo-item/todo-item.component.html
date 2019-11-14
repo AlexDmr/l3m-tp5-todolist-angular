@@ -2,14 +2,27 @@
   <input 	class			      = "toggle"
           type			      = "checkbox"
           name			      = "done"
+          [(ngModel)]     = "isDone"
   />
-  <label 	class="texte">
+  <label 	class      = "texte"
+          (dblclick) = "isEditing = true; newTextInput.focus()"
+          [style.backgroundColor] = "item.color"
+  >
+    {{item.label}}
   </label>
-  <button class="destroy"></button>
+  <button class="destroy" (click)="delete()"></button>
 </div>
-<form>
+<form (ngSubmit)="setLabel(newTextInput.value)">
   <input  #newTextInput
           name      = "newTextInput"
           class     = "edit"
+          [style.backgroundColor] = "item.color"
+          [ngModel] = "item.label"
   />
+  <input  type            = "color"
+          [ngModel]       = "item.color"
+          (ngModelChange) = "setColor($event)"
+          name            = "color"
+          [style.display] = "isEditing ? 'inline' : 'none'"
+          />
 </form>
